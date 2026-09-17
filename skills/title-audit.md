@@ -2,7 +2,7 @@
 description: Audit the search vocabulary against what the market calls the job right now. Reads real postings at target companies, extracts the live title vocabulary, diffs it against saved searches and profile terms, and hands back the exact terms to paste into LinkedIn preferences. /title-audit [function description | quick]. Claude Code, no API keys.
 ---
 
-**Agent:** `mark` · runs in this session (Step 4 needs the candidate to paste their LinkedIn preferences). Read `.claude/agents/mark.md` first.
+**Agent:** `mark` · runs in this session (Step 4 needs the candidate to paste their LinkedIn preferences). Read `personas/mark.md` first.
 
 ## Task
 

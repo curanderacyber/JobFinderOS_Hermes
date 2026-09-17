@@ -2,7 +2,7 @@
 description: The one page to have open during an interview round. Distills the full prep brief into logistics, the one thing the round is about, the beats, a per-interviewer block (who they are, opener, lead story and landing line, questions, traps), spent-story callbacks, and a before-you-walk-in checklist. /day-of-card <Company> [Round | interviewer] [date].
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first.
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first.
 
 ## Task
 

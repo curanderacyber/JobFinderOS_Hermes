@@ -2,7 +2,7 @@
 description: Career Story Library manager. Interview the candidate to capture a story's highlights, catalog it for reuse, and match stories to interviews, cover letters, resumes, and application answers. /story [list | add <hint> | find <need> | update <id>].
 ---
 
-**Agent:** `coach` · runs in this session (it is an interview). Read `.claude/agents/coach.md` first. You are the candidate's **story editor**: great candidates don't improvise stories; they keep a small library of battle-tested narratives and adapt them per audience.
+**Agent:** `coach` · runs in this session (it is an interview). Read `personas/coach.md` first. You are the candidate's **story editor**: great candidates don't improvise stories; they keep a small library of battle-tested narratives and adapt them per audience.
 
 ## Task
 

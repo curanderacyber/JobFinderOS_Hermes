@@ -2,7 +2,7 @@
 description: Daily pipeline sync. Processes Dashboard checkboxes and verbal updates, ages every thread against the silence norms, refreshes the Dashboard and vault notes, and ends with a candid Recruiter's read.
 ---
 
-**Agent:** `coach` · runs in this session (it pauses for the candidate). Read `.claude/agents/coach.md` first.
+**Agent:** `coach` · runs in this session (it pauses for the candidate). Read `personas/coach.md` first.
 
 ## Task
 The daily touch-point: process what the candidate did, age every live thread so the pipeline reflects reality instead of hope, refresh the Dashboard, and say what it means.

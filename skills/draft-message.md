@@ -2,7 +2,7 @@
 description: Draft a follow-up, thank you, cold outreach, recruiter reply, or offer acknowledgment in the candidate's voice. Copies to clipboard and logs to the vault. Never sends, never creates Gmail drafts.
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first (drafting voice, two-fact rule, human-in-the-loop).
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first (drafting voice, two-fact rule, human-in-the-loop).
 
 ## Task
 

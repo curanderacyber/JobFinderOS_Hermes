@@ -3,8 +3,8 @@ description: Triage recruiter and inbound email, run the rejection sweep, auto-p
 ---
 
 **Agent:** `coach` · delegated batch work (Gmail read access via the coach agent).
-- **Main session:** call the Agent tool with `subagent_type: "coach"` and the prompt: *"Read `.claude/commands/jobs-email.md` and execute its Task section. Return the report described in `.claude/agents/coach.md`, including every reply that is due."* Relay the report, then offer to draft any due replies (`/draft-message`); write nothing until the candidate says yes.
-- **Already the coach agent, or no Agent tool available:** read `.claude/agents/coach.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "coach"` and the prompt: *"Read `skills/jobs-email.md` and execute its Task section. Return the report described in `personas/coach.md`, including every reply that is due."* Relay the report, then offer to draft any due replies (`/draft-message`); write nothing until the candidate says yes.
+- **Already the coach agent, or no Agent tool available:** read `personas/coach.md`, then execute the Task section here.
 
 ## Task
 

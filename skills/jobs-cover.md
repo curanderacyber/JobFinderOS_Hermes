@@ -2,7 +2,7 @@
 description: Write a tailored cover letter for a specific role, researched and in the candidate's voice. Saves to the vault. Claude Code, no API keys.
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first (the drafting voice section is the law here).
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first (the drafting voice section is the law here).
 
 ## Task
 Args: company, role, optional job URL. Invoking this skill with a target is the candidate's yes to draft.

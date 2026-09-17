@@ -2,7 +2,7 @@
 description: The AI-tell gate. Run any draft (DM, email, cover letter, application answer, LinkedIn post, resume line) through the authenticity doctrine before it leaves the candidate's hands. Reports every tell with a fix, verifies the two-fact rule, rewrites only on request. /voice-check [register] [fix] with the draft pasted, a file path, or "clipboard".
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first; its drafting-voice section is the rulebook this skill enforces.
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first; its drafting-voice section is the rulebook this skill enforces.
 
 ## Task
 

@@ -3,8 +3,8 @@ description: Scan for new roles that fit the profile, direct from company career
 ---
 
 **Agent:** `scout` · delegated batch work.
-- **Main session:** call the Agent tool with `subagent_type: "scout"` and the prompt: *"Read `.claude/commands/jobs-scout.md` and execute its Task section. Args: <any arguments given>. Return the report described in `.claude/agents/scout.md`."* Relay the report and the Recruiter's read to the user.
-- **Already the scout agent, or no Agent tool available:** read `.claude/agents/scout.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "scout"` and the prompt: *"Read `skills/jobs-scout.md` and execute its Task section. Args: <any arguments given>. Return the report described in `personas/scout.md`."* Relay the report and the Recruiter's read to the user.
+- **Already the scout agent, or no Agent tool available:** read `personas/scout.md`, then execute the Task section here.
 
 ## Task
 

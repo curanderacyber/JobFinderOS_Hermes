@@ -2,7 +2,7 @@
 description: First-run setup. Interviews you about your career, goals, and a few real wins, then generates your private JobFinderOS profile so the agents can find and win jobs tailored to you. Runs on Claude Code, no API keys.
 ---
 
-**Agent:** none (setup guide) · runs in this session. Read `.claude/agents/coach.md`, `scout.md`, and `mark.md` once so you know what the profile you are about to write has to feed.
+**Agent:** none (setup guide) · runs in this session. Read `personas/coach.md`, `personas/scout.md`, and `personas/mark.md` once so you know what the profile you are about to write has to feed.
 
 ## Task
 Interview a new user and turn the answers into their private configuration. Any career: teacher, nurse, marketer, electrician, engineer. Do not assume a technical field.

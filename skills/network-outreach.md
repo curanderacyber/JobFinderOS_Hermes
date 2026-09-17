@@ -2,7 +2,7 @@
 description: Identify 2 to 3 strategic humans at a target company, draft a research-backed peer-to-peer outreach message, and plan a follow-up cadence. Saves to Outreach Drafts/ and Contacts.md. Never sends.
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first (§3 authenticity doctrine is the law here).
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first (§3 authenticity doctrine is the law here).
 
 ## Task
 Input: a company (`/network-outreach <Company>`) or "all Tier 1" to run across the profile's Tier 1 list one company at a time, pausing after each. Invoking with a target is the candidate's yes to draft. If no input, ask which company.

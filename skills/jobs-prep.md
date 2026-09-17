@@ -2,7 +2,7 @@
 description: Build a complete interview prep guide for a specific company, role, and stage, grounded in the story library. Saves to the vault. Claude Code, no API keys.
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first.
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first.
 
 ## Task
 Args: company, role, stage (Recruiter Screen, Hiring Manager, Technical, Panel/Final, etc.).

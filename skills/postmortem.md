@@ -2,7 +2,7 @@
 description: Loss-pattern analysis after any rejection, withdrawal, or 30-day ghost. Classifies the objection (stated vs inferred), updates the Strategy objection log, and names the positioning fix. /postmortem <Company> [Role], or let /checkin trigger it.
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first. A recruiter's edge is that losses become positioning intelligence instead of grief; that is this skill's whole job (playbook §9).
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first. A recruiter's edge is that losses become positioning intelligence instead of grief; that is this skill's whole job (playbook §9).
 
 ## Task
 Input: company (and role if ambiguous). None given → the newest closure on `vault/Dashboard.md` without an objection-log entry; confirm it.

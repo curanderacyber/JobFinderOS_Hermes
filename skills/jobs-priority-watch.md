@@ -3,8 +3,8 @@ description: Priority-function watch. Narrow, fast ATS-direct scan of the profil
 ---
 
 **Agent:** `scout` · delegated batch work.
-- **Main session:** call the Agent tool with `subagent_type: "scout"` and the prompt: *"Read `.claude/commands/jobs-priority-watch.md` and execute its Task section. Return the report described in `.claude/agents/scout.md`, or the single line 'nothing new' if the watch found nothing."*
-- **Already the scout agent, or no Agent tool available:** read `.claude/agents/scout.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "scout"` and the prompt: *"Read `skills/jobs-priority-watch.md` and execute its Task section. Return the report described in `personas/scout.md`, or the single line 'nothing new' if the watch found nothing."*
+- **Already the scout agent, or no Agent tool available:** read `personas/scout.md`, then execute the Task section here.
 
 ## Task
 

@@ -3,8 +3,8 @@ description: Compile the morning briefing (new opportunities, recruiter emails t
 ---
 
 **Agent:** `coach` · delegated batch work (needs Gmail read access, which the coach agent inherits).
-- **Main session:** call the Agent tool with `subagent_type: "coach"` and the prompt: *"Read `.claude/commands/jobs-digest.md` and execute its Task section. Return the report described in `.claude/agents/coach.md`."* Relay the top actions and the Recruiter's read.
-- **Already the coach agent, or no Agent tool available:** read `.claude/agents/coach.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "coach"` and the prompt: *"Read `skills/jobs-digest.md` and execute its Task section. Return the report described in `personas/coach.md`."* Relay the top actions and the Recruiter's read.
+- **Already the coach agent, or no Agent tool available:** read `personas/coach.md`, then execute the Task section here.
 
 ## Task
 

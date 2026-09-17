@@ -3,8 +3,8 @@ description: Scan Gmail like a recruiter with eyes on the inbox. Surfaces inboun
 ---
 
 **Agent:** `coach` · delegated batch work (Gmail read access via the coach agent).
-- **Main session:** call the Agent tool with `subagent_type: "coach"` and the prompt: *"Read `.claude/commands/email-watch.md` and execute its Task section for the window <last 48h unless the user said otherwise>. Return the briefing and the Recruiter's read."* Relay it, then offer to draft a reply to anything in Act Now (`/draft-message`), only on yes.
-- **Already the coach agent, or no Agent tool available:** read `.claude/agents/coach.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "coach"` and the prompt: *"Read `skills/email-watch.md` and execute its Task section for the window <last 48h unless the user said otherwise>. Return the briefing and the Recruiter's read."* Relay it, then offer to draft a reply to anything in Act Now (`/draft-message`), only on yes.
+- **Already the coach agent, or no Agent tool available:** read `personas/coach.md`, then execute the Task section here.
 
 ## Task
 

@@ -2,7 +2,7 @@
 description: The attach-a-human gate. Before any application goes in, walk the warm-path ladder, return a verdict, set the outreach-then-apply dates, and log the human path on the opportunity note. /warm-path <Company> [Role], or /warm-path audit to score every open application against the 70% target. Never drafts, never sends.
 ---
 
-**Agent:** `coach` · runs in this session. Read `.claude/agents/coach.md` first.
+**Agent:** `coach` · runs in this session. Read `personas/coach.md` first.
 
 ## Task
 

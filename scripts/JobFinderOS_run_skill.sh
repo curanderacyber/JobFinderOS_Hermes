@@ -1,17 +1,26 @@
 #!/usr/bin/env bash
-# Run a Claude Code skill locally (subscription auth). Writes to local vault/ only.
+# Legacy: run a Claude Code skill locally (subscription auth). Writes to local vault/ only.
 # Usage: JobFinderOS_run_skill.sh <log-label> <skill-name>
 # Example: JobFinderOS_run_skill.sh jobs-daily jobs-daily
+#
+# DEPRECATED ON HERMES — this script calls `claude -p /<skill>` and is part of the
+# macOS launchd bridge described in HERMES.md. Retained for provenance and for anyone
+# still running the system on Claude Code. On Hermes, run skills via subagent
+# (delegate_task) or inline (see HERMES.md "Running on Hermes"). The skills directory
+# is now `skills/` (renamed from `.claude/commands/`); this script reads the legacy path.
 set -euo pipefail
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 mkdir -p "$ROOT/logs"
 
 LABEL="${1:?log label required (e.g. jobs-daily)}"
 SKILL="${2:?skill name required (e.g. jobs-daily)}"
+# Legacy Claude Code path; skills are now in skills/ (renamed from .claude/commands/).
+# This script is deprecated on Hermes — see HERMES.md.
 CMD_FILE="$ROOT/.claude/commands/${SKILL}.md"
 if [[ ! -f "$CMD_FILE" ]]; then
-  echo "JobFinderOS_run_skill: missing skill file: $CMD_FILE" >&2
+  echo "JobFinderOS_run_skill: missing legacy skill file: $CMD_FILE (skills/ are now in skills/; this script is deprecated on Hermes)" >&2
   exit 2
 fi
 

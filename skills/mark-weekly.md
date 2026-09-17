@@ -3,8 +3,8 @@ description: Weekly brief. Market pulse, the weekly brief, the Jobs Handoff, and
 ---
 
 **Agent:** `mark` · delegated batch work.
-- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `.claude/commands/mark-weekly.md` and execute its Task section. Return the report described in `.claude/agents/mark.md`."* Relay the week's verdict and the Recruiter's read.
-- **Already the mark agent, or no Agent tool available:** read `.claude/agents/mark.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `skills/mark-weekly.md` and execute its Task section. Return the report described in `personas/mark.md`."* Relay the week's verdict and the Recruiter's read.
+- **Already the mark agent, or no Agent tool available:** read `personas/mark.md`, then execute the Task section here.
 
 ## Task
 
@@ -12,7 +12,7 @@ description: Weekly brief. Market pulse, the weekly brief, the Jobs Handoff, and
 `config/recruiter_playbook.md` (§5, §6, §9, §10), `config/profile.md`, `config/scoring_rubric.md`, recent `vault/Market Intel/`, `vault/Dashboard.md`, `vault/Strategy.md`, `vault/Tracking/Email Follow-ups Queue.md`.
 
 ### Deliverables (all required)
-1. **Market Pulse.** Execute the Task section of `.claude/commands/mark-pulse.md` (you are already the right agent).
+1. **Market Pulse.** Execute the Task section of `skills/mark-pulse.md` (you are already the right agent).
 2. **Weekly Brief** → `vault/Market Intel/Weekly Brief — <today>.md`, tagged `> **JobFinderOS:** Mark · <today> <time> TZ`, sections aligned to prior briefs: Executive Summary · Market Context: Signals & Insights · Tracked Target Company Updates · Emerging Role Watch (including any rename of the candidate's function) · Fresh Companies/Discovery (past 30 days) · Hiring Cycle Assessment · Action Checklist. The single highest-conviction move at the top.
 3. **Jobs Handoff** → write or replace `vault/Market Intel/Jobs Handoff.json`: `generated_at`, `source`, `written_by_agent: "Mark"`, `priority_now[] {company, why_now, role_types[]}`, `new_to_evaluate[] {company, why_now, action}`.
 4. **Strategy pass** in `vault/Strategy.md`:

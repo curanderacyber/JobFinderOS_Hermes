@@ -2,7 +2,7 @@
 description: Simulated interview for a specific company, role, and round. Plays the interviewer in character from the prep brief, probes like a real one, then scores every answer against the round's beats and the locked story scripts. Saves a debrief and drill list. /mock-interview <Company> [Role] [Stage | interviewer] [debrief | drill <question>].
 ---
 
-**Agent:** `coach` · runs in this session (it is a conversation).  Read `.claude/agents/coach.md` first.
+**Agent:** `coach` · runs in this session (it is a conversation).  Read `personas/coach.md` first.
 
 ## Task
 

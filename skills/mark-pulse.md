@@ -3,8 +3,8 @@ description: Market pulse. Scan the target cohort for funding, leadership moves,
 ---
 
 **Agent:** `mark` · delegated batch work.
-- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `.claude/commands/mark-pulse.md` and execute its Task section. Return the report described in `.claude/agents/mark.md`."* Relay the top signal and the Recruiter's read.
-- **Already the mark agent, or no Agent tool available:** read `.claude/agents/mark.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `skills/mark-pulse.md` and execute its Task section. Return the report described in `personas/mark.md`."* Relay the top signal and the Recruiter's read.
+- **Already the mark agent, or no Agent tool available:** read `personas/mark.md`, then execute the Task section here.
 
 ## Task
 

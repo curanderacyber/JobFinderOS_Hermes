@@ -4,9 +4,9 @@
 
 <h1 align="center">JobFinderOS</h1>
 
-<p align="center"><b>Find your dream job with Claude Code agents. No coffee breaks, no doomscrolling, no sleep till you're hired!</b></p>
+<p align="center"><b>Find your dream job with Hermes agents (ported from Claude Code). No coffee breaks, no doomscrolling, no sleep till you're hired!</b></p>
 
-This project capitalizes on one simple fact:  a career search is a numbers game. More real contacts lead to more listings you hear about early, more of those become applications with a person attached, and more of those become interviews. A single human running that chain alone has limited hours in the week. Agents do not. JobFinderOS is a Claude code project that puts agents to work on your search, profiling markets, following companies, crawling job postings, identifying new strategic contacts and preparing you for every interview. Each stage of the job search funnel gets more nurturing than you could feed it yourself, and the judgment stays with you.
+This project capitalizes on one simple fact: a career search is a numbers game. More real contacts lead to more listings you hear about early, more of those become applications with a person attached, and more of those become interviews. A single human running that chain alone has limited hours in the week. Agents do not. JobFinderOS is a project that runs on [Hermes](https://hermes-agent.nousresearch.com/) agents (ported from [Claude Code](https://claude.com/claude-code)); the original Claude Code instructions are retained as `CLAUDE.md`. It puts agents to work on your search, profiling markets, following companies, crawling job postings, identifying new strategic contacts and preparing you for every interview. Each stage of the job search funnel gets more nurturing than you could feed it yourself, and the judgment stays with you.
 
 This manual covers four things:
 
@@ -44,7 +44,7 @@ JobFinderOS is a set of agent personas and skills that run inside [Claude Code](
 >
 > A job search is sensitive, so nothing about you is meant to leave your machine. Your profile, scoring rubric, wins, stories, voice notes, target list, and ATS board list are all `.gitignore`d. So is the whole vault, apart from a few empty skeleton files (the Dashboard, Strategy, and Tracking templates) that ship blank; once they fill in, leave them uncommitted. The agents never commit, push, send, or upload anything. The only place your data goes is into the Claude Code session you start yourself, and the only remote it ever reaches is one you add by hand.
 
-**Skills are the commands you run.** Each is a short Markdown prompt in `.claude/commands/`. You type `/jobs-daily` or `/mock-interview` in Claude Code and the right agent picks it up. There are 25. Section 3 lists them by when you would use them.
+**Skills are the commands you run.** Each is a short Markdown prompt in `skills/`. Run it as a Hermes subagent (spawn with the persona from `personas/` as context and the skill as the goal) or inline for conversational tasks. There are 25. Section 3 lists them by when you would use them.
 
 **Your config is what they read first.** `config/profile.md` says who you are and what you want. `config/scoring_rubric.md` says how to score a role. `config/recruiter_playbook.md` says how the agents behave. Section 4 explains that playbook in plain English.
 
@@ -264,13 +264,13 @@ Set a deadline for having an offer in hand. Finals two weeks before that, hiring
 ### Layout
 
 ```
-.claude/agents/      coach.md · scout.md · mark.md         the three agents
-.claude/commands/    25 skills                             each names its agent in the first line
+personas/            coach.md · scout.md · mark.md         the three personas
+skills/              25 skills                             each names its agent in the first line
 config/              profile, rubric, wins, voice, targets  your copies are gitignored; templates ship
 config/recruiter_playbook.md                               the doctrine in Section 4, in full
 scripts/             scheduler, guards, ATS poller, pruner
 vault/               the Obsidian vault
-CLAUDE.md            project instructions the agents read every run
+HERMES.md            project instructions for Hermes agents (Claude Code instructions retained as CLAUDE.md)
 ```
 
 ### Email safety
@@ -300,9 +300,9 @@ The pixel character is Clawd, the Claude Code mascot. He belongs to Anthropic an
 
 The three agents are the same character in different gear. Coach wears the ball cap and carries the clipboard. Scout has the bucket hat and binoculars. Mark wears the green eyeshade and reads the ticker tape. The drawings live in `assets/` as SVG sources; the three agent icons also ship as PNGs because GitHub collapses SVGs inside Markdown tables.
 
-### Writing your own skill
+**Writing your own skill**
 
-Open any file in `.claude/commands/`. The first line names the agent. The rest is the task. Copy one, change the task, save it under a new name, and it is a command.
+Open any file in `skills/`. The first line names the agent. The rest is the task. Copy one, change the task, save it under a new name. Skills are Markdown prompts that run as Hermes subagents: spawn a subagent with the persona from `personas/` as context and the skill as the goal, or run it inline for conversational tasks. The full list of Hermes tools a skill may use is in `HERMES.md`.
 
 ---
 
@@ -310,7 +310,7 @@ Open any file in `.claude/commands/`. The first line names the agent. The rest i
 
 Issues and pull requests are welcome. Bug reports, wording fixes, and "this claim does not match the code" are all useful.
 
-The most valuable contribution is a new skill. Each file in `.claude/commands/` is a short Markdown prompt: a `description` line in the frontmatter, an **Agent** line saying which of Coach, Scout, or Mark runs it, and a Task section. If you have built one that helped your own search, open a pull request with it. A few things to keep in mind:
+The most valuable contribution is a new skill. Each file in `skills/` is a short Markdown prompt: a `description` line in the frontmatter, an **Agent** line saying which of Coach, Scout, or Mark runs it, and a Task section. If you have built one that helped your own search, open a pull request with it. A few things to keep in mind:
 
 - **Keep it career-neutral.** Skills read `config/profile.md` for everything about the candidate. Nothing about a specific person, industry, or company belongs in a skill.
 - **Follow the playbook.** Warm path first, low outreach volume, a human in the loop on every message, and a Recruiter's read at the end. `config/recruiter_playbook.md` is the doctrine; a skill that fights it will not be merged.

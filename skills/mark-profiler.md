@@ -3,8 +3,8 @@ description: Deep company evaluation for a career decision. Scored dimensions, t
 ---
 
 **Agent:** `mark` · delegated batch work.
-- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `.claude/commands/mark-profiler.md` and execute its Task section for <Company>. Return the verdict, the file written, and the Recruiter's read."*
-- **Already the mark agent, or no Agent tool available:** read `.claude/agents/mark.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `skills/mark-profiler.md` and execute its Task section for <Company>. Return the verdict, the file written, and the Recruiter's read."*
+- **Already the mark agent, or no Agent tool available:** read `personas/mark.md`, then execute the Task section here.
 
 ## Task
 Arg: company. Prefer truth and career leverage over politeness.

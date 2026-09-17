@@ -2,7 +2,7 @@
 description: "Choose-your-own-adventure session. Full pipeline sweep, then the 3 to 5 highest-leverage actions toward landing the next role. Pick one, do it together, the vault syncs, the menu re-ranks. Triggers on 'what should we do next?'"
 ---
 
-**Agent:** `coach` · runs in this session (it is a loop with the candidate). Read `.claude/agents/coach.md` first.
+**Agent:** `coach` · runs in this session (it is a loop with the candidate). Read `personas/coach.md` first.
 
 ## Task
 Triggers: "what should we do next," "what's next," "what should I focus on," "where should we spend time today."

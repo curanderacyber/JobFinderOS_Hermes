@@ -3,8 +3,8 @@ description: Company research brief. Business model, funding, leadership, produc
 ---
 
 **Agent:** `mark` · delegated batch work.
-- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `.claude/commands/jobs-research.md` and execute its Task section for <Company>. Return the summary, contacts found, the recommended angle, and the file written."*
-- **Already the mark agent, or no Agent tool available:** read `.claude/agents/mark.md`, then execute the Task section here.
+- **Main session:** call the Agent tool with `subagent_type: "mark"` and the prompt: *"Read `skills/jobs-research.md` and execute its Task section for <Company>. Return the summary, contacts found, the recommended angle, and the file written."*
+- **Already the mark agent, or no Agent tool available:** read `personas/mark.md`, then execute the Task section here.
 
 ## Task
 Arg: company.
