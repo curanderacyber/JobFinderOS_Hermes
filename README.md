@@ -21,7 +21,7 @@ Plus a short [reference](#5-reference) and a note on [contributing](#contributin
 
 ## 1. What it is
 
-JobFinderOS is a set of agent personas and skills that run inside [Claude Code](https://claude.com/claude-code) and work for you to identify career opportunities based on your criteria. They watch the market, find roles, keep your pipeline up to date and honest, and get you ready for every interview. They write everything to a folder of Markdown notes, which you can open in [Obsidian](https://obsidian.md) or any text editor.
+JobFinderOS is a set of agent personas and skills that run on [Hermes](https://hermes-agent.nousresearch.com/) agents and work for you to identify career opportunities based on your criteria. They watch the market, find roles, keep your pipeline up to date and honest, and get you ready for every interview. They write everything to a folder of Markdown notes, which you can open in [Obsidian](https://obsidian.md) or any text editor.
 
 **Three agents, each with one job.**
 
@@ -42,7 +42,7 @@ JobFinderOS is a set of agent personas and skills that run inside [Claude Code](
 > [!IMPORTANT]
 > **🔒 Privacy by Design**
 >
-> A job search is sensitive, so nothing about you is meant to leave your machine. Your profile, scoring rubric, wins, stories, voice notes, target list, and ATS board list are all `.gitignore`d. So is the whole vault, apart from a few empty skeleton files (the Dashboard, Strategy, and Tracking templates) that ship blank; once they fill in, leave them uncommitted. The agents never commit, push, send, or upload anything. The only place your data goes is into the Claude Code session you start yourself, and the only remote it ever reaches is one you add by hand.
+> A job search is sensitive, so nothing about you is meant to leave your machine. Your profile, scoring rubric, wins, stories, voice notes, target list, and ATS board list are all `.gitignore`d. So is the whole vault, apart from a few empty skeleton files (the Dashboard, Strategy, and Tracking templates) that ship blank; once they fill in, leave them uncommitted. The agents never commit, push, send, or upload anything. The only place your data goes is into the Hermes session you start yourself, and the only remote it ever reaches is one you add by hand.
 
 **Skills are the commands you run.** Each is a short Markdown prompt in `skills/`. Run it as a Hermes subagent (spawn with the persona from `personas/` as context and the skill as the goal) or inline for conversational tasks. There are 25. Section 3 lists them by when you would use them.
 
@@ -52,20 +52,22 @@ JobFinderOS is a set of agent personas and skills that run inside [Claude Code](
 
 **What it never does.** It never sends an email or a message. Drafts go to your clipboard and the vault, and you send them from your own client. It never mass-applies. It never sits in the interview.
 
-**What it needs.** A Claude Code subscription. No API keys. Python is only used by the optional scheduler.
+**What it needs.** Hermes running in this directory. Python 3.11+ only if you want the scheduler tick script; skip it if you never plan to schedule anything. No API keys are stored in this repo.
 
 ---
 
 ## 2. Getting up and running
 
-Four steps. The first two happen in your terminal, the last two inside Claude Code.
+Four steps. The first two happen in your terminal, the last two inside Hermes.
 
-### Step 1. Get Claude Code
+### Step 1. Get Hermes
 
-You need [Claude Code](https://claude.com/claude-code) installed and logged in with a subscription. No API keys.
+You need [Hermes](https://hermes-agent.nousresearch.com/) installed and running in this directory. Hermes connects to whatever model provider you configure in your profile; no API keys are stored in this repo.
 
 ```bash
-claude auth login
+# Install Hermes following the instructions at:
+# https://hermes-agent.nousresearch.com/docs
+# Then start it and open a project in the cloned directory.
 ```
 
 ### Step 2. Clone and install
@@ -73,22 +75,23 @@ claude auth login
 Paste this block as one piece:
 
 ```bash
-git clone https://github.com/matthewprice/JobFinderOS.git
-cd JobFinderOS
+git clone https://github.com/curanderacyber/JobFinderOS_Hermes.git
+cd JobFinderOS_Hermes
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-claude
+pip install PyYAML          # only if you want the scheduler tick script
 ```
 
-The two Python lines need Python 3.11 or newer. They only serve the optional scheduler and helper scripts, so if you never plan to schedule anything you can skip them and go straight to `claude`.
+The Python lines need Python 3.11 or newer and only serve the optional scheduler tick script (`scripts/jobfinderos_hermes_tick.py`) and the helper scripts. If you never plan to schedule anything you can skip them and go straight to Hermes. The original Claude Code version of this project cloned `https://github.com/matthewprice/JobFinderOS.git` and ran inside Claude Code; this Hermes fork retargets the execution layer to Hermes agents while keeping the same skills, personas, playbook, and vault. See `HERMES.md` for how a skill actually runs on Hermes, and `CLAUDE.md` for the retained Claude Code instructions and note templates.
 
 ### Step 3. Teach it who you are
 
-Inside Claude Code:
+Inside Hermes, run the onboard skill:
 
 ```
-/onboard
+onboard
 ```
+
+(This is the Hermes equivalent of typing `/onboard` in Claude Code — the skill is `skills/onboard.md` and runs as a Hermes subagent or inline for this conversational task; see `HERMES.md`.)
 
 This is a 15-minute conversation. It asks about your current role, what you want next, your salary floor, where you will and will not work, companies to avoid, the exact job titles recruiters use for your target, and two or three real wins with numbers. Any career works. It does not assume you are technical.
 
@@ -104,7 +107,7 @@ When it finishes you have four private files, all gitignored:
 ### Step 4. Run the first scan
 
 ```
-/jobs-scout
+jobs-scout
 ```
 
 Scout reads your target companies' careers pages, scores what it finds, and writes an opportunity note for anything that clears your bar. Open `vault/` and read `Dashboard.md`. You are running.
@@ -114,22 +117,16 @@ Scout reads your target companies' careers pages, scores what it finds, and writ
 Each of these is independent. Add them when you want them.
 
 - **Obsidian.** Open `vault/` as a vault in [Obsidian](https://obsidian.md) to read the notes with working links. Any text editor works too.
-- **Gmail.** Connect Gmail as an MCP connector in claude.ai. Coach can then triage recruiter email, spot interview invitations, and detect rejections. It is instructed to read only; Section 5 explains what that rests on.
-- **A schedule (macOS only).** Drafts are copied to the clipboard with `pbcopy` and the scheduler uses launchd, so this part is Mac-specific. Elsewhere, drafts still land in the vault and you run the skills by hand.
+- **Gmail.** Connect Gmail through the Hermes email skill (himalaya or google-workspace). Coach can then triage recruiter email, spot interview invitations, and detect rejections. It is read-only; Section 5 explains what that rests on.
+- **A schedule.** The scheduler is `scripts/jobfinderos_hermes_tick.py` (reads `config/scheduler.yaml`, prints what is due in dry-run mode) combined with a Hermes cronjob per scheduled job (daily `jobs-daily`, weekly `mark-weekly`, weekday priority watch). The original Claude Code version used macOS launchd; this Hermes fork is not Mac-specific. Drafts still land in the vault; you can also run the skills by hand.
+
+  Check the scheduler is reading your config:
 
   ```bash
-  bash scripts/JobFinderOS_install_launchd.sh
+  python3 scripts/jobfinderos_hermes_tick.py --dry-run
   ```
 
-  One LaunchAgent ticks every 30 minutes. When a window in `config/scheduler.yaml` comes due it runs `/jobs-daily` (every day), `/mark-weekly` (once a week), and a narrow weekday watch on your priority function. Your Mac has to be awake. A missed run catches up on the next tick. Runs are logged to `logs/` and mirrored to `vault/Automation/`.
-
-  Check it is working:
-
-  ```bash
-  python3 scripts/scheduler_tick.py --dry-run
-  bash scripts/verify_local_automation.sh
-  ```
-
+  To wire the schedule as a cronjob, see `HERMES.md` ("Running on Hermes" → "Scheduled jobs") and the Hermes cronjob tool.
 ---
 
 ## 3. Using it
@@ -275,7 +272,7 @@ HERMES.md            project instructions for Hermes agents (Claude Code instruc
 
 ### Email safety
 
-No code in this repository calls a send or draft API. Gmail is reached only through the claude.ai MCP connector, and that connector does expose send and draft tools. What keeps the agents read-only is doctrine: `CLAUDE.md`, the agent files, and the playbook all forbid sending and drafting, and every draft goes to the clipboard and the vault instead. Read those instructions before you trust the system with your inbox; there is no separate technical lock.
+No code in this repository calls a send or draft API. Gmail is reached only through the Hermes email skill (himalaya or google-workspace), and that skill does expose send and draft tools. What keeps the agents read-only is doctrine: `HERMES.md`, the persona files in `personas/`, and the playbook all forbid sending and drafting, and every draft goes to the clipboard and the vault instead. Read those instructions before you trust the system with your inbox; there is no separate technical lock.
 
 ### Privacy
 
@@ -283,16 +280,15 @@ Your profile, rubric, wins, stories, voice notes, and vault contents are gitigno
 
 ### Retention
 
-Daily digests, run summaries, and daily briefs keep 30 days. Weekly briefs keep 90. A weekly launchd job prunes the rest. The vault is gitignored here, so if you want a permanent archive, back it up to a private repository of your own. Anything worth keeping lives in `Strategy.md`, `Tracking/`, or `Companies/`, never in an old digest.
+Daily digests, run summaries, and daily briefs keep 30 days. Weekly briefs keep 90. The pruner (`scripts/jobfinderos_prune_history.py`) deletes past-window notes on its own schedule; on Hermes that schedule is a cronjob or a tick step that calls the pruner (the original Claude Code version used a weekly launchd job). The vault is gitignored here, so if you want a permanent archive, back it up to a private repository of your own. Anything worth keeping lives in `Strategy.md`, `Tracking/`, or `Companies/`, never in an old digest.
 
 ### Manual runs and logs
 
 ```bash
-python3 scripts/scheduler_tick.py --dry-run             # what would run right now
-bash scripts/JobFinderOS_run_skill.sh jobs-daily jobs-daily   # run one skill the way the scheduler does
-bash scripts/JobFinderOS_check_local_runner.sh          # is Claude Code reachable from launchd?
-tail -f logs/launchd-runs.log                            # watch runs
+python3 scripts/jobfinderos_hermes_tick.py --dry-run   # what the scheduler would run right now
 ```
+
+The tick script reads `config/scheduler.yaml` and prints the daily/weekly/watch decision (it does not yet spawn subagents — that is a later step; see `HERMES.md`). To run a skill directly, spawn a Hermes subagent with the persona from `personas/` as context and the skill from `skills/` as the goal, or run the skill inline for conversational tasks; the worked example for `jobs-daily` is in `HERMES.md`. Runs the scheduler cares about are logged to `vault/Automation/JobFinderOS — Schedule & Run Log.md` and, for the legacy Claude Code launchd bridge, to `logs/launchd-runs.log` (gitignored).
 
 ### Credits
 
