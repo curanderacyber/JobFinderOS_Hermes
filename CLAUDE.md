@@ -203,21 +203,25 @@ Stages: `🔍 Spotted` → `📝 Applied` → `📞 Screen` → `🧑‍💼 HM 
 
 ---
 
-## Agent run model — Claude Code (no API keys)
+## Agent run model — Hermes (ported from Claude Code)
 
-Everything runs through Claude Code with subscription auth. Scheduled automation is **macOS launchd** → `scripts/scheduler_tick.py` → `scripts/JobFinderOS_run_skill.sh` → `claude -p /skill-name` → writes `vault/` on disk. See `vault/Automation/JobFinderOS — Local Runbook.md`.
+This file retains the note templates from the original Claude Code version. The execution layer has been re-targeted to Hermes: see `HERMES.md` for how a skill actually runs on Hermes, and `scripts/run_jobs_daily_hermes.py` for a bounded, fictional, end-to-end demonstration that runs the `jobs-daily` skill as a Hermes subagent.
 
-**Three agents, one doctrine.** Personas live in `.claude/agents/` as Claude Code project subagents; each file holds the persona, its doctrine, tool access, and model. Skills are thin task prompts that name their agent in the first line:
+On Hermes, scheduled automation is one of:
+- A Hermes cronjob per scheduled job (daily `jobs-daily`, weekly `mark-weekly`, weekday priority watch), each spawning a subagent with the persona from `personas/` as context and the skill from `skills/` as the goal.
+- The tick script `scripts/jobfinderos_hermes_tick.py`, which reads `config/scheduler.yaml` and decides what is due (today it does not yet spawn subagents — that gap is closed by the driver above).
+
+**Three personas, one doctrine.** Personas live in `personas/` (`coach.md`, `scout.md`, `mark.md`); each file holds the persona, its doctrine, its Hermes tool access, and a model note. Skills are thin task prompts in `skills/` that name their agent in the first line:
 
 | Agent | Job | Tools / model | Skills |
 |-------|-----|---------------|--------|
-| `coach` | The recruiter brain: judgment, people, prep, drafting, losses | All tools incl. Gmail (read + clipboard only); inherits the session model | checkin, whats-next, postmortem, story, jobs-prep, mock-interview, day-of-card, jobs-cover, draft-message, network-outreach, warm-path, voice-check, profile; jobs-email, email-watch, jobs-digest (delegated) |
-| `scout` | The crawler: ATS-direct scanning, scoring, opportunity notes, the watch | Web + vault, no Gmail; Sonnet | jobs-scout, jobs-priority-watch (delegated) |
-| `mark` | The market analyst: signals, renames, briefs, deep-dives, the handoff | Web + vault, no Gmail; Sonnet | mark-pulse, mark-weekly, mark-profiler, jobs-research (delegated); title-audit (in session) |
+| `coach` | The recruiter brain: judgment, people, prep, drafting, losses | Hermes tools incl. the email skill (read + clipboard only); inherits the session model | checkin, whats-next, postmortem, story, jobs-prep, mock-interview, day-of-card, jobs-cover, draft-message, network-outreach, warm-path, voice-check, profile; jobs-email, email-watch, jobs-digest (delegated) |
+| `scout` | The crawler: ATS-direct scanning, scoring, opportunity notes, the watch | Web + vault, no email; Hermes web tools (web_search, web_extract, browser_exec) | jobs-scout, jobs-priority-watch (delegated) |
+| `mark` | The market analyst: signals, renames, briefs, deep-dives, the handoff | Web + vault, no email; Hermes web tools | mark-pulse, mark-weekly, mark-profiler, jobs-research (delegated); title-audit (in session) |
 
-**Delegated** skills spawn their agent via the Agent tool (separate context, restricted tools) and relay the report; if the Agent tool is unavailable they read the agent file and run inline. **In-session** skills are conversations and read the agent file for persona and doctrine. `/jobs-daily` is the orchestrator: pulse and scout in parallel, then email, then digest, then one consolidated Recruiter's read.
+**Delegated** skills run as a Hermes subagent (separate context, restricted tools via `delegate_task`) and relay the report; if a subagent is unavailable they read the persona file and run inline. **In-session** skills are conversations and read the persona file for persona and doctrine. The `jobs-daily` skill is the orchestrator: pulse and scout in parallel, then email, then digest, then one consolidated Recruiter's read. A worked example that actually runs `jobs-daily` as a Hermes subagent is in `scripts/run_jobs_daily_hermes.py`.
 
-**Skills** (`.claude/commands/*.md`):
+**Skills** (`skills/*.md`):
 
 | Skill | Purpose |
 |-------|---------|

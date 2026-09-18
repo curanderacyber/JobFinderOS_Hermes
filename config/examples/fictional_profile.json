@@ -1,0 +1,67 @@
+{
+  "name": "Jordan Avery",
+  "goes_by": "Jordan",
+  "note": "Fictional demonstration candidate only. Not a real person. Used solely to prove the Hermes port runs a skill end to end.",
+  "current_employer": "Northwind Data",
+  "career_history": [
+    "Implementation specialist at Northwind Data (2021-present): led 14 SaaS rollouts for mid-market logistics and supply-chain clients, averaged 37-day go-lives against a 45-day target, and wrote the regional runbook the team still uses.",
+    "Customer success engineer at Harborline Systems (2018-2021): owned 28 accounts, cut churn in the book from 11% to 6.4% over two years, and escalated 5 product gaps that shipped.",
+    "IT support lead at Cascade Regional (2015-2018): ran a 3-person desk, cleared a 14-day ticket backlog in 6 weeks, and stood up the first self-service portal for the org."
+  ],
+  "target_roles": [
+    "Implementation Manager",
+    "Professional Services Lead",
+    "Customer Success Engineering Manager",
+    "Technical Onboarding Lead"
+  ],
+  "lanes": "SaaS implementation, professional services, customer success engineering, technical onboarding. IC or small-team lead. Not sales, not pure support, not DevOps tooling.",
+  "seniority_filter": "Manager or senior IC; a founding or team-build mandate counts as leadership even at a Senior IC title.",
+  "comp_floor": 135000,
+  "comp_note": "Total comp, USD. Unknown comp = include with a note; below $135k is a hard discard.",
+  "location_rules": "Remote or hybrid within the Pacific time zone. Onsite in Seattle, Portland, or the Bay Area is fine if hybrid and within 90 minutes of a reasonable commute. Relocation only for a clear step up in scope and comp.",
+  "exclusions": [
+    "Companies whose primary business is selling to job seekers or resume services.",
+    "Any employer already in the candidate's recent career history as a direct report relationship."
+  ],
+  "excluded_profile": "mass-outsourced call-center and BPO employers; staffing firms filling volume roles; companies whose engineering blog has not had a non-marketing post in 18+ months.",
+  "target_companies": {
+    "tier_one": [
+      "Northwind Data",
+      "Harborline Systems",
+      "Cascade Regional"
+    ],
+    "tier_two": [
+      "LogiCore",
+      "SendGrid",
+      "Stripe",
+      "Shopify"
+    ],
+    "watch_list": [
+      "Acme Logistics",
+      "Bay Supply Co"
+    ],
+    "priority_function": "implementation and customer success engineering",
+    "priority_watch_companies": [
+      "Northwind Data",
+      "LogiCore",
+      "SendGrid"
+    ]
+  },
+  "ats_url_table": [
+    {"company": "Northwind Data", "url": "https://careers.northwind.example/jobs", "ats": "greenhouse"},
+    {"company": "Harborline Systems", "url": "https://boards.ashbyhq.com/harborline", "ats": "ashby"},
+    {"company": "Cascade Regional", "url": "https://careers.cascaderegional.example", "ats": "lever"},
+    {"company": "LogiCore", "url": "https://careers.logicore.example", "ats": "workable"},
+    {"company": "SendGrid", "url": "https://sendgrid.com/company/careers", "ats": "greenhouse"},
+    {"company": "Stripe", "url": "https://stripe.com/jobs", "ats": "workable"},
+    {"company": "Shopify", "url": "https://www.shopify.com/careers", "ats": "greenhouse"},
+    {"company": "Acme Logistics", "url": "https://jobs.acme-logistics.example", "ats": "lever"},
+    {"company": "Bay Supply Co", "url": "https://careers.baysupply.example", "ats": "greenhouse"}
+  ],
+  "contact": {
+    "name": "Jordan Avery",
+    "goes_by": "Jordan",
+    "email_short": "jordan",
+    "location": "Pacific time zone, remote-first"
+  }
+}

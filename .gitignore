@@ -9,6 +9,7 @@ config/ats_boards.yaml
 
 # --- the vault is private by default: ignore everything, then allow the skeleton ---
 vault/**
+vault/examples/jobfinderos-hermes-run/
 !vault/Dashboard.md
 !vault/Strategy.md
 !vault/Companies/

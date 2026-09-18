@@ -1,10 +1,10 @@
 # AGENTS.md — JobFinderOS
 
-Guidance for coding agents and IDE copilots working on this repository (the humans' instructions for the *job-search* agents are in `CLAUDE.md`).
+Guidance for coding agents and IDE copilots working on this repository (the humans' instructions for the *job-search* agents are in `HERMES.md`; the retained Claude Code instructions and note templates are in `CLAUDE.md`).
 
 ## What this is
 
-An agentic job-search system on Claude Code: three personas in `.claude/agents/`, skills in `.claude/commands/`, doctrine in `config/recruiter_playbook.md`, output in an Obsidian vault at `vault/`. Scheduled runs go launchd → `scripts/scheduler_tick.py` → `scripts/JobFinderOS_run_skill.sh` → `claude -p /skill`.
+An agentic job-search system ported from Claude Code to Hermes: three personas in `personas/` (`coach.md`, `scout.md`, `mark.md`), 25 skills in `skills/`, doctrine in `config/recruiter_playbook.md`, output in an Obsidian vault at `vault/`. Scheduled runs on Hermes go cronjob or tick script → Hermes subagent (coach/scout/mark) via `delegate_task`, or run inline for conversational skills. The original Claude Code execution layer (launchd → `JobFinderOS_run_skill.sh` → `claude -p /skill`) is retained as legacy reference in `scripts/`; see `HERMES.md`.
 
 ## Read first
 
