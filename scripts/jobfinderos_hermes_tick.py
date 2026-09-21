@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-JobFinderOS — Hermes-flavored scheduler tick (planned).
+JobFinderOS — Hermes-flavored scheduler tick.
 Reads config/scheduler.yaml, checks whether any scheduled job is due for the
 current time, and prints the decision. Replaces the Claude Code launchd bridge
 as the scheduling layer; on Hermes, scheduled runs are one of:
@@ -10,12 +10,16 @@ as the scheduling layer; on Hermes, scheduled runs are one of:
 - This tick printed as a dry-run source of truth for whichever cronjob
   implementation is chosen.
 
-Does NOT yet spawn subagents. That is a later commit.
+Does NOT yet spawn subagents. Commit 4a adds the skill/persona/profile loading
+helpers (testable with bare `python3 --dry-run`); Commit 4b wires the actual
+delegate_task calls.
 """
+
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime, date
 from pathlib import Path
@@ -65,6 +69,81 @@ def load_config(root: Path, config_path: Path) -> dict[str, Any]:
     return cfg
 
 
+# ---- skill / persona / profile loading (Commit 4a) ----
+
+_SKILL_LINE_RE = re.compile(r"^\*\*Agent:\*\*\s*`?(\w+)`?", re.MULTILINE)
+_ORCHESTRATOR_PERSONA_RE = re.compile(r"runs in this session as `(\w+)`")
+
+
+def load_skill_text(root: Path, skill_name: str) -> str:
+    """Read a skill file from skills/{skill_name}.md."""
+    path = root / "skills" / f"{skill_name}.md"
+    if not path.exists():
+        raise FileNotFoundError(f"skill not found: {path}")
+    return path.read_text(encoding="utf-8")
+
+
+def agent_name_for_skill(skill_text: str) -> str:
+    """Extract the Hermes subagent persona a skill should run under.
+
+    Skills name the agent right after the frontmatter. Most skills name a
+    persona directly (``**Agent:** scout``); the orchestrator skill names an
+    orchestrator role and then says which persona it runs as in-session::
+
+        **Agent:** orchestrator · runs in this session as `coach` ...
+
+    We return the in-session persona for orchestrator skills, and the direct
+    name for everyone else, so the tick can load the right persona file.
+    """
+    m = _SKILL_LINE_RE.search(skill_text)
+    if not m:
+        raise ValueError("skill has no parsable **Agent:** line")
+    name = m.group(1)
+    if name == "orchestrator":
+        pm = _ORCHESTRATOR_PERSONA_RE.search(skill_text)
+        if not pm:
+            raise ValueError("orchestrator skill has no 'runs in this session as `<persona>`' clause")
+        return pm.group(1)
+    return name
+
+
+def load_persona_text(root: Path, agent_name: str) -> str:
+    """Read a persona file from personas/{agent_name}.md."""
+    path = root / "personas" / f"{agent_name}.md"
+    if not path.exists():
+        raise FileNotFoundError(f"persona not found: {path}")
+    return path.read_text(encoding="utf-8")
+
+
+def profile_note(root: Path) -> str:
+    """One-line note about which profile the tick should pass to subagents.
+
+    Uses the real profile at config/profile.md when it exists; otherwise falls
+    back to the fictional demo at config/examples/fictional_profile.json.
+    """
+    real = root / "config" / "profile.md"
+    if real.exists():
+        return "Real candidate profile at config/profile.md — read it for the candidate's specifics."
+    demo = root / "config" / "examples" / "fictional_profile.json"
+    if demo.exists():
+        return "FICTIONAL demo profile at config/examples/fictional_profile.json — not a real person; demonstration only."
+    return "No profile found; subagents will run without candidate specifics."
+
+
+def load_profile_text(root: Path) -> str:
+    """Return the profile file content subagents should read."""
+    real = root / "config" / "profile.md"
+    if real.exists():
+        return real.read_text(encoding="utf-8")
+    demo = root / "config" / "examples" / "fictional_profile.json"
+    if demo.exists():
+        return demo.read_text(encoding="utf-8")
+    return ""
+
+
+# ---- end loading helpers ----
+
+
 def localize(now: datetime, tz_name: str | None) -> datetime:
     """Best-effort localize to the profile timezone; fall back to system TZ."""
     if tz_name:
@@ -87,11 +166,13 @@ def monday_of_week(d: date) -> date:
 
 
 def week_slot_start_local(now: datetime, weekday: int, hour: int, minute: int) -> datetime:
-    py_wd = weekday  # 0 = Monday through 6 = Sunday (config convention; see README)
+    # config uses launchd convention: 0=Sunday, 1=Monday, ..., 6=Saturday
+    # convert to Python weekday (0=Monday ... 6=Sunday)
+    py_wd = (weekday + 6) % 7
     monday = monday_of_week(now.date())
-    slot_date = monday + __import__("datetime").timedelta(days=py_wd)
     t = datetime(now.year, now.month, now.day, hour, minute)
-    return datetime.combine(slot_date, t.timetz().replace(tzinfo=now.tzinfo))
+    return datetime.combine(monday + __import__("datetime").timedelta(days=py_wd),
+                            t.timetz().replace(tzinfo=now.tzinfo))
 
 
 def weekly_is_due(state: dict[str, Any], now: datetime, cfg: dict[str, Any]) -> bool:
@@ -160,10 +241,11 @@ def main() -> int:
         print(json.dumps(decision, indent=2))
         return 0
 
-    # Placeholder for actual runs (later commit):
-    # weekly_due  -> spawn mark subagent with skills/mark-weekly.md as goal
-    # daily_due   -> spawn coach subagent with skills/jobs-daily.md as goal
-    # watch_due   -> spawn scout subagent with skills/jobs-priority-watch.md as goal
+    # Commit 4b: replace this placeholder with actual delegate_task calls.
+    # today's mapping (from scheduler.yaml + skills/* agent lines):
+    #   weekly_due -> skills/mark-weekly.md  -> persona mark
+    #   daily_due  -> skills/jobs-daily.md  -> persona coach (orchestrator runs as coach)
+    #   watch_due  -> skills/jobs-priority-watch.md -> persona scout
     if weekly_due:
         state["last_weekly_iso_year"] = now.isocalendar().year
         state["last_weekly_iso_week"] = now.isocalendar().week
