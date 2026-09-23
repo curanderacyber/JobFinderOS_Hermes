@@ -10,9 +10,13 @@ as the scheduling layer; on Hermes, scheduled runs are one of:
 - This tick printed as a dry-run source of truth for whichever cronjob
   implementation is chosen.
 
-Does NOT yet spawn subagents. Commit 4a adds the skill/persona/profile loading
-helpers (testable with bare `python3 --dry-run`); Commit 4b wires the actual
-delegate_task calls.
+Wires the actual delegate_task calls (Commit 4b). The tick now runs due skills
+as Hermes subagents via delegate_task: weekly_due -> skills/mark-weekly.md
+(persona mark), daily_due -> skills/jobs-daily.md (persona coach), watch_due ->
+skills/jobs-priority-watch.md (persona scout).
+
+--dry-run still prints decisions only and works outside Hermes; actual subagent
+spawns require the Hermes runtime (hermes_tools.delegate_task).
 """
 
 from __future__ import annotations
@@ -71,7 +75,7 @@ def load_config(root: Path, config_path: Path) -> dict[str, Any]:
 
 # ---- skill / persona / profile loading (Commit 4a) ----
 
-_SKILL_LINE_RE = re.compile(r"^\*\*Agent:\*\*\s*`?(\w+)`?", re.MULTILINE)
+_SKILL_LINE_RE = re.compile(r"^\*\*Agent:\*\*\s+`?(\w+)`?", re.MULTILINE)
 _ORCHESTRATOR_PERSONA_RE = re.compile(r"runs in this session as `(\w+)`")
 
 
@@ -142,6 +146,57 @@ def load_profile_text(root: Path) -> str:
 
 
 # ---- end loading helpers ----
+
+
+# ---- due-job runners (Commit 4b) ----
+
+
+def run_skill(root: Path, skill_name: str) -> str:
+    """Run a skill as a Hermes subagent. Returns the report text.
+
+    Loads the skill, discovers its persona, loads the persona + profile, and
+    hands both to delegate_task with a goal that tells the subagent to read the
+    skill's Task section and execute it against the candidate profile.
+    """
+    try:
+        from hermes_tools import delegate_task
+    except Exception as e:
+        print(
+            "run_skill is written for the Hermes runtime (hermes_tools). "
+            f"Running outside Hermes will fail: {e}",
+            file=sys.stderr,
+        )
+        raise SystemExit(2) from e
+
+    skill_text = load_skill_text(root, skill_name)
+    agent_name = agent_name_for_skill(skill_text)
+    persona_text = load_persona_text(root, agent_name)
+    profile_note_text = profile_note(root)
+    profile_text = load_profile_text(root)
+
+    context = persona_text
+    if profile_text:
+        context += f"\n\n---- candidate profile ----\n{profile_text}\n"
+    context += f"\n\n{profile_note_text}"
+    context += (
+        "\n\nRead config/recruiter_playbook.md for the recruiter doctrine before "
+        "acting. Return a report at the end: files written, pipeline changes, "
+        "anything due, and the Recruiter's read."
+    )
+
+    goal = (
+        f"Read skills/{skill_name}.md and execute its Task section against the "
+        f"candidate profile above. {profile_note_text} "
+        f"Return a report covering: what you did, files written, anything that "
+        f"changes priorities, and the Recruiter's read."
+    )
+
+    print(f"==> spawning {agent_name} subagent for {skill_name}")
+    report = delegate_task(context=context, goal=goal)
+    return report
+
+
+# ---- end due-job runners ----
 
 
 def localize(now: datetime, tz_name: str | None) -> datetime:
@@ -241,20 +296,25 @@ def main() -> int:
         print(json.dumps(decision, indent=2))
         return 0
 
-    # Commit 4b: replace this placeholder with actual delegate_task calls.
-    # today's mapping (from scheduler.yaml + skills/* agent lines):
+    # Run due skills as Hermes subagents (Commit 4b).
+    # Mapping (from scheduler.yaml + skills/* agent lines):
     #   weekly_due -> skills/mark-weekly.md  -> persona mark
     #   daily_due  -> skills/jobs-daily.md  -> persona coach (orchestrator runs as coach)
     #   watch_due  -> skills/jobs-priority-watch.md -> persona scout
     if weekly_due:
+        run_skill(root, "mark-weekly")
         state["last_weekly_iso_year"] = now.isocalendar().year
         state["last_weekly_iso_week"] = now.isocalendar().week
         state["last_weekly_run_date"] = now.date().isoformat()
         state["last_daily_date"] = now.date().isoformat()
         save_state(root, state)
     elif daily_due:
+        run_skill(root, "jobs-daily")
         state["last_daily_date"] = now.date().isoformat()
         save_state(root, state)
+
+    if watch_due:
+        run_skill(root, "jobs-priority-watch")
 
     return 0
 
