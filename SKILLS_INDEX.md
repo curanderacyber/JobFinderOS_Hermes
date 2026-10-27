@@ -37,5 +37,5 @@ Below is the commit-time copy. Regenerate from the tree when skills are added or
 Regenerate this table with the script at `scripts/regenerate_skills_index.py`:
 
 ```bash
-python3 scripts/regenerate_skills_index.py > SKILLS_INDEX.md
+python3 scripts/regenerate_skills_index.py
 ```
