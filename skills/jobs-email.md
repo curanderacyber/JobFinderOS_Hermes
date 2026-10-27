@@ -1,5 +1,5 @@
 ---
-description: Triage recruiter and inbound email, run the rejection sweep, auto-prep for any interview detected, age silent threads per the silence norms, and keep the Email Follow-ups Queue current. Flags replies that are due; drafts only on the candidate's yes, clipboard or vault only. Claude Code, no API keys.
+description: Triage recruiter and inbound email, run the rejection sweep, auto-prep for any interview detected, age silent threads per the silence norms, and keep the Email Follow-ups Queue current. Flags replies that are due; drafts only on the candidate's yes, clipboard or vault only. Hermes, no API keys.
 ---
 
 **Agent:** `coach` · delegated batch work (Gmail read access via the coach agent).

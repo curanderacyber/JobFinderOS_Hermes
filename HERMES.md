@@ -72,7 +72,7 @@ Each persona file ends with a **When you run as a subagent** section — return 
 
 ### Model per persona
 
-In Claude Code, `coach` runs `model: inherit` and `scout`/`mark` run `model: sonnet`. On Hermes, subagents inherit the parent model (Solar Pro 4 here) unless pinned via delegation config. Coach is judgment-heavy and worth the full model; scout and mark are research-heavy and can run lighter if cost is a concern. That is an orchestration decision, not a file rewrite.
+In Claude Code, `coach` runs `model: inherit` and `scout`/`mark` run `model: sonnet`. On Hermes, subagents inherit the parent model unless pinned via delegation config (`delegation.provider` / `delegation.model` in `config.yaml`). Coach is judgment-heavy and worth the full model; scout and mark are research-heavy and can run lighter if cost is a concern. That is an orchestration decision, not a file rewrite.
 
 ---
 

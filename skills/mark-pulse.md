@@ -1,5 +1,5 @@
 ---
-description: Market pulse. Scan the target cohort for funding, leadership moves, GTM build-outs, and renames relevant to the search. Writes the Market Pulse, the Daily Marketing Brief, and the Jobs Handoff. Claude Code, no API keys.
+description: Market pulse. Scan the target cohort for funding, leadership moves, GTM build-outs, and renames relevant to the search. Writes the Market Pulse, the Daily Marketing Brief, and the Jobs Handoff. Hermes, no API keys.
 ---
 
 **Agent:** `mark` · delegated batch work.

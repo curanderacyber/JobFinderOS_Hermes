@@ -1,5 +1,5 @@
 ---
-description: Full daily routine. Runs the market pulse and the scout in parallel, then email triage, then the digest, and writes one consolidated run record and Recruiter's read. The everyday driver. Claude Code, no API keys.
+description: Full daily routine. Runs the market pulse and the scout in parallel, then email triage, then the digest, and writes one consolidated run record and Recruiter's read. The everyday driver. Hermes, no API keys.
 ---
 
 **Agent:** orchestrator · runs in this session as `coach` for the closing read. Read `personas/coach.md` first.

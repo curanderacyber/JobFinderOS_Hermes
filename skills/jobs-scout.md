@@ -1,5 +1,5 @@
 ---
-description: Scan for new roles that fit the profile, direct from company careers pages and ATS boards plus web search, score them, and log the strong ones to the vault. Works for any career. Claude Code, no API keys.
+description: Scan for new roles that fit the profile, direct from company careers pages and ATS boards plus web search, score them, and log the strong ones to the vault. Works for any career. Hermes, no API keys.
 ---
 
 **Agent:** `scout` · delegated batch work.

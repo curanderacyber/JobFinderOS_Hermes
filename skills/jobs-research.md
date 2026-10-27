@@ -1,5 +1,5 @@
 ---
-description: Company research brief. Business model, funding, leadership, product, GTM motion, culture, open reqs in the candidate's lanes, interview signals, and a recommended angle. Saves to the vault. Claude Code, no API keys.
+description: Company research brief. Business model, funding, leadership, product, GTM motion, culture, open reqs in the candidate's lanes, interview signals, and a recommended angle. Saves to the vault. Hermes, no API keys.
 ---
 
 **Agent:** `mark` · delegated batch work.

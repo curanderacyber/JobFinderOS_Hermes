@@ -1,5 +1,5 @@
 ---
-description: Compile the morning briefing (new opportunities, recruiter emails to review, pipeline updates, action items) into Daily Digests/, with a scoped Dashboard refresh and a warm-path coverage check. Claude Code, no API keys.
+description: Compile the morning briefing (new opportunities, recruiter emails to review, pipeline updates, action items) into Daily Digests/, with a scoped Dashboard refresh and a warm-path coverage check. Hermes, no API keys.
 ---
 
 **Agent:** `coach` · delegated batch work (needs Gmail read access, which the coach agent inherits).

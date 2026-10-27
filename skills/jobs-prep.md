@@ -1,5 +1,5 @@
 ---
-description: Build a complete interview prep guide for a specific company, role, and stage, grounded in the story library. Saves to the vault. Claude Code, no API keys.
+description: Build a complete interview prep guide for a specific company, role, and stage, grounded in the story library. Saves to the vault. Hermes, no API keys.
 ---
 
 **Agent:** `coach` · runs in this session. Read `personas/coach.md` first.

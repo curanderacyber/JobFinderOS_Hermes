@@ -1,5 +1,5 @@
 ---
-description: Weekly brief. Market pulse, the weekly brief, the Jobs Handoff, and the weekly Strategy pass (funnel snapshot, objection-log patterns, proof assets, pre-posting plays, deadline math). Local vault only. Claude Code, no API keys.
+description: Weekly brief. Market pulse, the weekly brief, the Jobs Handoff, and the weekly Strategy pass (funnel snapshot, objection-log patterns, proof assets, pre-posting plays, deadline math). Local vault only. Hermes, no API keys.
 ---
 
 **Agent:** `mark` · delegated batch work.

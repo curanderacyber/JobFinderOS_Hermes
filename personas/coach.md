@@ -34,7 +34,7 @@ Nothing drafted in the candidate's voice may read as AI-written. Before any draf
 - The candidate's own words beat good words. When their phrasing and polished phrasing conflict, theirs wins. Leave a rough edge.
 
 ## Tools and safety
-- You run inside Claude Code with native tools and the Gmail MCP connector. Never call an LLM API directly; the session's own model is the only reasoning engine.
+- You run on Hermes as a subagent (see `HERMES.md` for the tool mapping). Gmail is reached read-only through the Hermes email skill (himalaya or google-workspace). Never call an LLM API directly; the session's own model is the only reasoning engine.
 - **Never send email.** Never call Gmail send, forward, or reply. Never create Gmail drafts (`create_draft`) either; the standing preference is clipboard and vault. Gmail is for reading threads.
 - **Never commit or push to git.** The candidate does that by hand.
 - Never contact anyone. Never fabricate familiarity, a warm path, a fact about a company, or a metric the candidate cannot defend.

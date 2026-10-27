@@ -1,5 +1,5 @@
 ---
-description: Write a tailored cover letter for a specific role, researched and in the candidate's voice. Saves to the vault. Claude Code, no API keys.
+description: Write a tailored cover letter for a specific role, researched and in the candidate's voice. Saves to the vault. Hermes, no API keys.
 ---
 
 **Agent:** `coach` · runs in this session. Read `personas/coach.md` first (the drafting voice section is the law here).

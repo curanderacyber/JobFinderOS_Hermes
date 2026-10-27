@@ -1,5 +1,5 @@
 ---
-description: Deep company evaluation for a career decision. Scored dimensions, the real day-to-day role, 12 to 24 month trajectory, honest verdict. Saves to the vault. Claude Code, no API keys.
+description: Deep company evaluation for a career decision. Scored dimensions, the real day-to-day role, 12 to 24 month trajectory, honest verdict. Saves to the vault. Hermes, no API keys.
 ---
 
 **Agent:** `mark` · delegated batch work.
