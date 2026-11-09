@@ -14,10 +14,11 @@ An agentic job-search system ported from Claude Code to Hermes: three personas i
 
 1. Nothing about a specific candidate goes into this repo. Personal data lives only in gitignored paths (`config/profile.md` and friends, `vault/` content). If you need an example, use a fictional one.
 2. Skills refer to "the candidate" and read every specific (name, employer, comp floor, targets, location) from `config/profile.md`.
-3. Never add a code path that sends email or creates Gmail drafts. Never make automation commit or push.
+3. Never add a code path that sends email or creates Gmail drafts.
 4. Prefer existing entrypoints over new wrappers. One scheduler; no overlapping jobs.
 5. Keep skills thin. A skill names its agent in the first line and describes the task; the persona and doctrine live in the agent file.
-6. Small, verifiable edits. After an automation change, run `python3 scripts/jobfinderos_hermes_tick.py --dry-run` and `bash scripts/verify_local_automation.sh`.
+6. Automation may commit and push **only with the repo owner's explicit authorization for that work item** (granted per session/task, not globally). Never push speculatively; never push `vault/` content, which is gitignored anyway.
+7. Small, verifiable edits. After an automation change, run `python3 scripts/jobfinderos_hermes_tick.py --dry-run` and `bash scripts/verify_local_automation.sh`.
 
 ## Quick commands
 
