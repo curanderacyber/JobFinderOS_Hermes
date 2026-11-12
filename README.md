@@ -6,6 +6,9 @@
 
 <p align="center"><b>Find your dream job with Hermes agents (ported from Claude Code). No coffee breaks, no doomscrolling, no sleep till you're hired!</b></p>
 
+> [!NOTE]
+> **Status: in testing.** The port is feature-complete — all 25 skills, three personas, the scheduler, and an end-to-end verified `jobs-daily` run as Hermes subagents (see `vault/examples/jobfinderos-hermes-run/` after running the demo) — and is currently being shaken out against a real job search. Expect rough edges; issue reports welcome.
+
 This project capitalizes on one simple fact: a career search is a numbers game. More real contacts lead to more listings you hear about early, more of those become applications with a person attached, and more of those become interviews. A single human running that chain alone has limited hours in the week. Agents do not. JobFinderOS is a project that runs on [Hermes](https://hermes-agent.nousresearch.com/) agents (ported from [Claude Code](https://claude.com/claude-code)); the original Claude Code instructions are retained as `CLAUDE.md`. It puts agents to work on your search, profiling markets, following companies, crawling job postings, identifying new strategic contacts and preparing you for every interview. Each stage of the job search funnel gets more nurturing than you could feed it yourself, and the judgment stays with you.
 
 This manual covers four things:
