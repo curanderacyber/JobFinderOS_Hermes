@@ -170,6 +170,16 @@ Registers from `config/voice.md`: measured third-person prose for resumes and su
 - **Hermes cronjobs** (preferred): one cronjob per scheduled job, using the Hermes `cronjob_manage` tool. Times come from `config/scheduler.yaml`. Each cronjob spawns the relevant subagent (coach for daily, mark for weekly) or runs a script.
 - **A tick script** (`scripts/jobfinderos_hermes_tick.py`): reads `config/scheduler.yaml`, checks the time, and either spawns subagents via `delegate_task` or prints what is due (dry-run). Closer to the original `scheduler_tick.py` but Hermes-flavored.
 
+**Cronjobs as wired (2026-11-12).** Three jobs exist in the Hermes cron registry, all created **paused** until `config/profile.md` exists (i.e. after `/onboard` runs) and the owner resumes them. Each runs with `workdir` at the repo root so this file and AGENTS.md load, delivers its report to the origin chat, and stops early with a "run onboard first" report if `config/profile.md` is missing — a scheduled job never runs against the fictional demo profile.
+
+| Job | Schedule | Subagent | Skill | Job ID |
+|-----|----------|----------|-------|--------|
+| "JobFinderOS daily jobs run" | every day at 7am | mark + scout (parallel), then coach | mark-pulse, jobs-scout, jobs-daily | `afb0ee112773` |
+| "JobFinderOS weekly brief (mark)" | every monday at 8am | mark | mark-weekly | `196a21bf214b` |
+| "JobFinderOS priority watch (weekdays)" | weekdays at 9am | scout | jobs-priority-watch | `bcf9458b082c` |
+
+The watch is silent-by-design: a run with nothing new reports one line. To activate: resume each job with `cronjob_manage` (action `resume`) once onboarding is done. The schedules mirror `config/scheduler.yaml` (daily 07:00, weekly Mon 08:00, watch weekdays 09:00).
+
 The launchd plists and `scripts/JobFinderOS_install_launchd.sh` are macOS-specific and tied to the Claude Code CLI bridge; they are legacy and kept in `scripts/launchd/` for provenance.
 
 Optional helpers (unchanged, script-only): the deterministic ATS poller (`scripts/jobfinderos_ats_poll.py`, writes `vault/Market Intel/ATS Inbox.md`), the retention pruner, and the pointer-note writer. All searching goes **directly to company careers pages and ATS boards** (URL table in `config/profile.md`), never aggregators.
