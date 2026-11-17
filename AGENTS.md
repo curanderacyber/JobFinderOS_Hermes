@@ -19,8 +19,8 @@ Live integrations (this machine, their account only): Gmail read-only via the `g
 3. Never add a code path that sends email or creates Gmail drafts. Email access is read-only by construction (OAuth scope `gmail.readonly`); keep it that way — do not re-run `gws auth login` without `--readonly`, and do not authorize any account other than the owner's dedicated job-search inbox.
 4. Prefer existing entrypoints over new wrappers. One scheduler; no overlapping jobs.
 5. Keep skills thin. A skill names its agent in the first line and describes the task; the persona and doctrine live in the agent file.
-6. Automation may commit and push **only with the repo owner's explicit authorization for that work item** (granted per session/task, not globally). Never push speculatively; never push `vault/` content, which is gitignored anyway.
-7. Small, verifiable edits. After an automation change, run `python3 scripts/jobfinderos_hermes_tick.py --dry-run` and `bash scripts/verify_local_automation.sh`.
+6. Automation may commit and push **only with the repo owner's explicit authorization for that work item** (granted per session/task, not globally). Never push speculatively; never push `vault/` content, which is gitignored anyway. **Stage by explicit path, never `git add -A` or `git add .`**: the skeleton files the `.gitignore` whitelists (`vault/Dashboard.md`, `vault/Strategy.md`, `vault/Tracking/`, `vault/Automation/`) fill with private pipeline data over time and must stay uncommitted. On 2026-11-17 a force-push scrub was required after `add -A` swept live vault state into a public commit; do not repeat it.
+7. Small, verifiable edits. After an automation change, run `.venv/bin/python scripts/jobfinderos_hermes_tick.py --dry-run` and `bash scripts/verify_local_automation.sh`.
 
 ## Quick commands
 
