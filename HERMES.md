@@ -177,6 +177,9 @@ Registers from `config/voice.md`: measured third-person prose for resumes and su
 | "JobFinderOS daily jobs run" | every day at 7am | mark + scout (parallel), then coach | mark-pulse, jobs-scout, jobs-daily | `afb0ee112773` |
 | "JobFinderOS weekly brief (mark)" | every monday at 8am | mark | mark-weekly | `196a21bf214b` |
 | "JobFinderOS priority watch (weekdays)" | weekdays at 9am | scout | jobs-priority-watch | `bcf9458b082c` |
+| "Gmail gws token re-auth reminder" | every monday at 8:30am | (self-check, no subagent) | — | `1bbf0a1b1d10` |
+
+The fourth job is maintenance, not pipeline: the gws OAuth client runs in testing mode, so Gmail refresh tokens expire weekly. It checks `gws auth status` and, only when the token is dead, delivers a fresh re-auth URL. (The app cannot be published to production — Google's external-app verification is out of reach — so weekly re-auth is the accepted workaround.)
 
 The watch is silent-by-design: a run with nothing new reports one line. To activate: resume each job with `cronjob_manage` (action `resume`) once onboarding is done. The schedules mirror `config/scheduler.yaml` (daily 07:00, weekly Mon 08:00, watch weekdays 09:00).
 
