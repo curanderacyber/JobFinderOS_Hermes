@@ -181,6 +181,8 @@ Registers from `config/voice.md`: measured third-person prose for resumes and su
 
 The fourth job is maintenance, not pipeline: the gws OAuth client runs in testing mode, so Gmail refresh tokens expire weekly. It checks `gws auth status` and, only when the token is dead, delivers a fresh re-auth URL. (The app cannot be published to production — Google's external-app verification is out of reach — so weekly re-auth is the accepted workaround.)
 
+**Model split (2026-11-27).** All four jobs are **pinned to `tencent/hy3` (Nous)** so gateway/model changes in the chat never break unattended runs. Prior failure: the jobs followed a dead local model (`inkling-2-mini` via Ollama, which was gone and whose service pointed at a nonexistent model path). The interactive/chat default stays on `tencent/hy4-flash:free` for Alicia's daily reviews. Never unpin a job without an explicit owner decision.
+
 The watch is silent-by-design: a run with nothing new reports one line. To activate: resume each job with `cronjob_manage` (action `resume`) once onboarding is done. The schedules mirror `config/scheduler.yaml` (daily 07:00, weekly Mon 08:00, watch weekdays 09:00).
 
 The launchd plists and `scripts/JobFinderOS_install_launchd.sh` are macOS-specific and tied to the Claude Code CLI bridge; they are legacy and kept in `scripts/launchd/` for provenance.
